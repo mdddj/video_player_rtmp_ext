@@ -26,3 +26,11 @@ VideoPlayerRtmpExtWidget(
    },
 )
 ```
+
+## 2. Controller API
+
+* Start playing
+```dart
+controller.play();
+```
+
