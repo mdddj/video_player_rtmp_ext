@@ -136,11 +136,21 @@ class IJKPlayerController {
     return IJKPlayerController(playUrl: url);
   }
 
+  ///暂停播放
+  Future<void> pause() async {
+    await state._platformController.pause();
+  }
 
   ///开始播放
   Future<void> play() async {
     await state.play();
   }
 
+  ///结束播放
+  Future<void> stop() async {
+    await state._platformController.stop();
+  }
+  ///是否正在播放中
+  Future<bool> get isPlaying async =>  await state._platformController.isPlaying();
 
 }

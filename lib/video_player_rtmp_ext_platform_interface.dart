@@ -23,4 +23,13 @@ abstract class VideoPlayerRtmpExtPlatform extends PlatformInterface {
 
   ///销毁
   void dispose();
+
+  ///暂停
+  Future<void> pause();
+
+  ///是否正在播放
+  Future<bool> isPlaying();
+
+  ///结束播放
+  Future<void> stop();
 }

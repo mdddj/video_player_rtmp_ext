@@ -30,8 +30,25 @@ class VideoPlayerRtmpExtController {
    await channel.play();
  }
 
+ ///暂停播放
+ Future<void> pause() async {
+   await channel.pause();
+ }
+
+ ///是否正在播放中
+ Future<bool> isPlaying() async {
+   return await channel.isPlaying();
+ }
+
+ ///结束播放
+ Future<void> stop() async {
+   await channel.stop();
+ }
+
  ///销毁
  void dispose() {
    channel.dispose();
  }
+
+
 }

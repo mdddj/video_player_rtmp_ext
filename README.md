@@ -30,8 +30,25 @@ VideoPlayerRtmpExtWidget(
 
 ## 2. Controller API
 
-* Start playing
+* Start
 ```dart
 controller.play();
 ```
+
+* Pause
+```dart
+controller.pause();
+```
+
+* Stop
+```dart
+controller.stop();
+```
+
+* Judge whether it is playing
+```dart
+final isPlaying = await controller.isPlaying;
+```
+
+
 

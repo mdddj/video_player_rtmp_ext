@@ -39,6 +39,18 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
     );
   }
 
+  Future<void> pause() async  {
+   await controller.pause();
+  }
+
+  Future<void> stop() async {
+    await controller.stop();
+  }
+
+  Future<void> isPlaying() async {
+   final isPlaying =  await controller.isPlaying;
+  }
+
   @override
   void dispose() {
     super.dispose();

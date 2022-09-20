@@ -66,6 +66,16 @@ class PluginView: NSObject,FlutterPlatformView{
         case "controller-dispose":
             controller.shutdown()
             break
+        case "controller-pause":
+            controller.pause()
+            break
+        case "controller-get-state":
+            let isPlaying =  controller.isPlaying()
+            result(isPlaying)
+            break
+        case "controller-stop":
+            controller.stop()
+            break
         default:
             break
         }
