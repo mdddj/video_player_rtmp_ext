@@ -4,6 +4,10 @@ A player supporting rtmp&rtmps live video
 
 ## Getting Started
 
+```yaml
+video_player_rtmp_ext: ^last_version
+```
+
 ## 1.Simple example
 
 * Initialize controller
