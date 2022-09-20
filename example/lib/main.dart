@@ -20,8 +20,8 @@ class LiveBroascasePage extends StatefulWidget {
 class _LiveBroascasePageState extends State<LiveBroascasePage> {
   final playerUrl =
       "http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8";
-  late final IJKPlayerController controller =
-      IJKPlayerController.network(playerUrl);
+   final IJKPlayerController controller =
+      IJKPlayerController.network("http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8");
 
   @override
   Widget build(BuildContext context) {

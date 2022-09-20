@@ -1,7 +1,7 @@
 name: video_player_rtmp_ext
 description: A player supporting rtmp&rtmps live video
 version: 0.0.1
-homepage:
+homepage: https://github.com/mdddj/video_player_rtmp_ext
 
 environment:
   sdk: '>=2.18.1 <3.0.0'
