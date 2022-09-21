@@ -20,17 +20,23 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 import tv.danmaku.ijk.media.exo2.ExoPlayerCacheManager
 
 ///视图
-class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,activity: Activity,context: Context): PlatformView,MethodChannel.MethodCallHandler {
+class IJKPlayerView(
+    val flutterPluginBinding: FlutterPluginBinding,
+    viewId: Int,
+    activity: Activity,
+    context: Context
+) : PlatformView, MethodChannel.MethodCallHandler {
 
 
     val TAG = "IJKPlayerView";
 
-    private val player : EmptyVideoPlayer = LayoutInflater.from(context)
-        .inflate(R.layout.empty_video,null) as EmptyVideoPlayer
+    private val player: EmptyVideoPlayer = LayoutInflater.from(context)
+        .inflate(R.layout.empty_video, null) as EmptyVideoPlayer
     private val option = GSYVideoOptionBuilder()
 
 
-    private val methedChannel: MethodChannel = MethodChannel(flutterPluginBinding.binaryMessenger,"video-player-rtmp-ext-$viewId")
+    private val methedChannel: MethodChannel =
+        MethodChannel(flutterPluginBinding.binaryMessenger, "video-player-rtmp-ext-$viewId")
 
 
     ///初始化
@@ -47,49 +53,58 @@ class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,a
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
 
         println("进来了:${call.method} ${call.arguments} ")
-        when(call.method){
-            "init"-> {
-
+        when (call.method) {
+            "init" -> {
+                result.success(true)
             }
             "init-controller" -> {
-                initController(call,result)
+                initController(call, result)
+                result.success(true)
             }
             "controller-play" -> {
                 player.startPlayLogic()
+                result.success(true)
             }
-            "controller-pause"-> {
+            "controller-pause" -> {
                 player.onVideoPause()
+                result.success(true)
             }
             "controller-stop" -> {
                 player.onVideoReset()
+                result.success(true)
             }
             "android-change-mode" -> {
                 changeManager(call)
+                result.success(true)
+            }
+            "controller-get-state" -> {
+                val isPlaying = player.isInPlayingState
+                result.success(isPlaying)
             }
             else -> {
                 println("未处理的事件:${call.method}")
             }
         }
-        result.success(true)
+
     }
 
     ///初始化
     private fun initController(call: MethodCall, result: MethodChannel.Result) {
         val args = call.getParamsMap()
-        val url =  args["url"]!! as String
+        val url = args["url"]!! as String
         option.setUrl(url).build(player)
     }
 
 
     ///视图销毁
     override fun dispose() {
-        Log.e(TAG,"视图销毁")
+        Log.e(TAG, "视图销毁")
     }
 
 
     ///切换内核
     private fun changeManager(call: MethodCall) {
-        when(call.getParamsMap()["mode"]!! as Int){
+        when (call.getParamsMap()["mode"]!! as Int) {
             0 -> {
                 PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
                 CacheFactory.setCacheManager(ExoPlayerCacheManager::class.java)
@@ -109,6 +124,6 @@ class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,a
     }
 }
 
-fun MethodCall.getParamsMap() : Map<String,Any> {
-    return arguments  as Map<String,Any>
+fun MethodCall.getParamsMap(): Map<String, Any> {
+    return arguments as Map<String, Any>
 }

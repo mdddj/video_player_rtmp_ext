@@ -8,6 +8,10 @@ A player supporting rtmp,rtmps,m3u8 live video
 Your flutter version must be greater than 
 or equal to 3.3.2 to use this plug-in
 
+* Test Link
+1. http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8
+2. rtmp://ns8.indexforce.com/home/mystream
+3. rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp
 
 ## Getting Started
 
