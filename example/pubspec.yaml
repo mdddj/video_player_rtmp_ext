@@ -18,7 +18,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dd_js_util: any
+  dd_js_util:
+    path: ../../../dd_js_util
   video_player_rtmp_ext:
     # When depending on this package from a real application you should use:
     #   video_player_rtmp_ext: ^x.y.z

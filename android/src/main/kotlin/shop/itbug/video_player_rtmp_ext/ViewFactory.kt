@@ -12,6 +12,6 @@ class ViewFactory(private val flutterPluginBinding: FlutterPluginBinding, privat
 
 
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        return IJKPlayerView(flutterPluginBinding,viewId,activity)
+        return IJKPlayerView(flutterPluginBinding,viewId,activity,context!!)
     }
 }
