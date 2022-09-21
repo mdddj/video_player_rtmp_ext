@@ -33,8 +33,10 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
         child: VideoPlayerRtmpExtWidget(
           controller: controller,
           viewCreated: (IJKPlayerController _) async {
-            print("进来了...");
-           await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
+            if(controller.isAndroid){
+              await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
+            }
+
            await controller.play();
           },
         ),

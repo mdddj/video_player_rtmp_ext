@@ -72,5 +72,12 @@ controller.stop();
 final isPlaying = await controller.isPlaying;
 ```
 
+* If you want to play the m3u8 video, please add this line
+  (only android)
+```dart
+if(controller.isAndroid){
+   await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
+}
+```
 
 
