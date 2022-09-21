@@ -1,4 +1,5 @@
 
+import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/video_player_rtmp_ext_method_channel.dart';
 
 
@@ -43,6 +44,11 @@ class VideoPlayerRtmpExtController {
  ///结束播放
  Future<void> stop() async {
    await channel.stop();
+ }
+
+ ///切换播放器内核
+ Future<void> changeModel(PlayerFactory playerFactory) async {
+   await channel.changeModel(playerFactory);
  }
 
  ///销毁

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<!--<com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!-- android:layout_height="match_parent" android:layout_width="match_parent">-->
+<!--</com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>-->
+<shop.itbug.video_player_rtmp_ext.view.EmptyVideoPlayer
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="@android:color/black">
-    <FrameLayout
-        android:id="@+id/empty_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center">
-
-    </FrameLayout>
-</RelativeLayout>
+    android:layout_width="match_parent" android:layout_height="match_parent" />

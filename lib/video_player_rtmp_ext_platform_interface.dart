@@ -1,5 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'models/android_play_manager.dart';
+
 
 abstract class VideoPlayerRtmpExtPlatform extends PlatformInterface {
   VideoPlayerRtmpExtPlatform() : super(token: _token);
@@ -32,4 +34,9 @@ abstract class VideoPlayerRtmpExtPlatform extends PlatformInterface {
 
   ///结束播放
   Future<void> stop();
+
+  ///更换安卓播放器内核
+  ///仅安卓可以设置
+  /// only android
+  Future<void> changeModel(PlayerFactory playerFactory);
 }

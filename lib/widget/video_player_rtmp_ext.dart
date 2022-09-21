@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 
+import '../models/android_play_manager.dart';
 import '../video_player_rtmp_ext.dart';
 
 const _UIKITVIEW_ID = 'video-player-rtmp-widget-ios';
@@ -72,11 +73,11 @@ class _VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
 
   ///安卓端视图
   Widget get _buildAndroidWidget {
-    return AndroidView(viewType:_ANDROIDVIEW_ID,onPlatformViewCreated: _platformSetup );
+    return AndroidView(viewType:_ANDROIDVIEW_ID,onPlatformViewCreated: _platformSetup);
   }
 
   ///视图创建完毕
-  Future<void> _platformSetup(int id)  async {
+  Future<void> _platformSetup(int id) async {
     _platformController = VideoPlayerRtmpExtController(id);
     await _init();
     widget.viewCreated?.call(widget.controller);
@@ -88,7 +89,6 @@ class _VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
    if(controller.playUrl!=null){
      await _platformController.initIJKPlayController(controller.playUrl!);
    }
-
   }
 
   ///刷新UI
@@ -152,5 +152,13 @@ class IJKPlayerController {
   }
   ///是否正在播放中
   Future<bool> get isPlaying async =>  await state._platformController.isPlaying();
+
+  /// 切换内核
+  /// only android
+  Future<void> setPlayManager(PlayerFactory playerFactory) async {
+    await state._platformController.changeModel(playerFactory);
+  }
+
+  bool get isAndroid => Platform.isAndroid;
 
 }

@@ -1,7 +1,12 @@
 # video_player_rtmp_ext
 [![pub](https://badgen.net/pub/v/video_player_rtmp_ext)](https://pub.dev/packages/video_player_rtmp_ext)
+<a href="https://flutter.dev/docs/get-started/install/windows"><img src="https://badgen.net/badge/flutter/v3.3.2/red" /></a>
+<a href="https://jq.qq.com/?_wv=1027&k=Z0AHodXB"><img src="https://badgen.net/badge/platform/Android&iOS/pink" /></a>
 
 A player supporting rtmp&rtmps live video
+
+Your flutter version must be greater than 
+or equal to 3.3.2 to use this plug-in
 
 
 ## Getting Started
@@ -11,7 +16,7 @@ video_player_rtmp_ext: ^last_version
 ```
 
 Android
-in project `build.gradle` add this line
+* in project `build.gradle` add this line
 ```kotlin
 allprojects {
     repositories {
@@ -22,7 +27,9 @@ allprojects {
 }
 ```
 
-and `minSdkVersion` set to `19`
+* add `minSdkVersion` set to `19`
+
+* add `android:usesCleartextTraffic="true"` to you `AndroidManifest.xml`
 
 ## 1.Simple example
 

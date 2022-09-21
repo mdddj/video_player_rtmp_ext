@@ -1,6 +1,7 @@
 import 'package:dd_js_util/ext/context.dart';
 import 'package:dd_js_util/util/log.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/widget/video_player_rtmp_ext.dart';
 
 void main() {
@@ -31,8 +32,10 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
         aspectRatio: context.screenWidth / context.kBodyHeight,
         child: VideoPlayerRtmpExtWidget(
           controller: controller,
-          viewCreated: (IJKPlayerController _){
-            controller.play();
+          viewCreated: (IJKPlayerController _) async {
+            print("进来了...");
+           await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
+           await controller.play();
           },
         ),
       ),

@@ -6,11 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
+import com.shuyu.gsyvideoplayer.cache.CacheFactory
+import com.shuyu.gsyvideoplayer.cache.ProxyCacheManager
+import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
+import com.shuyu.gsyvideoplayer.player.PlayerFactory
+import com.shuyu.gsyvideoplayer.player.SystemPlayerManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
 import shop.itbug.video_player_rtmp_ext.R
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
+import tv.danmaku.ijk.media.exo2.ExoPlayerCacheManager
 
 ///视图
 class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,activity: Activity,context: Context): PlatformView,MethodChannel.MethodCallHandler {
@@ -39,21 +46,37 @@ class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,a
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
 
+        println("进来了:${call.method} ${call.arguments} ")
         when(call.method){
+            "init"-> {
+
+            }
             "init-controller" -> {
                 initController(call,result)
             }
+            "controller-play" -> {
+                player.startPlayLogic()
+            }
+            "controller-pause"-> {
+                player.onVideoPause()
+            }
+            "controller-stop" -> {
+                player.onVideoReset()
+            }
+            "android-change-mode" -> {
+                changeManager(call)
+            }
             else -> {
-                println("未处理的事件")
+                println("未处理的事件:${call.method}")
             }
         }
+        result.success(true)
     }
 
     ///初始化
-    fun initController(call: MethodCall, result: MethodChannel.Result) {
-        val args = call.arguments  as Map<String,Any>
+    private fun initController(call: MethodCall, result: MethodChannel.Result) {
+        val args = call.getParamsMap()
         val url =  args["url"]!! as String
-        Log.e(TAG,"播放地址:$url")
         option.setUrl(url).build(player)
     }
 
@@ -62,4 +85,30 @@ class IJKPlayerView(val flutterPluginBinding: FlutterPluginBinding,viewId: Int,a
     override fun dispose() {
         Log.e(TAG,"视图销毁")
     }
+
+
+    ///切换内核
+    private fun changeManager(call: MethodCall) {
+        when(call.getParamsMap()["mode"]!! as Int){
+            0 -> {
+                PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
+                CacheFactory.setCacheManager(ExoPlayerCacheManager::class.java)
+            }
+            1 -> {
+                PlayerFactory.setPlayManager(SystemPlayerManager::class.java)
+                CacheFactory.setCacheManager(ProxyCacheManager::class.java)
+            }
+            2 -> {
+                PlayerFactory.setPlayManager(IjkPlayerManager::class.java)
+                CacheFactory.setCacheManager(ProxyCacheManager::class.java)
+            }
+            else -> {
+
+            }
+        }
+    }
+}
+
+fun MethodCall.getParamsMap() : Map<String,Any> {
+    return arguments  as Map<String,Any>
 }

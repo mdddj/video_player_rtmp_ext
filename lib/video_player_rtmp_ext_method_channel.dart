@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:video_player_rtmp_ext/exceptions/exception.dart';
+import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 
 import 'video_player_rtmp_ext_platform_interface.dart';
 
@@ -53,6 +54,11 @@ class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
   @override
   Future<void> stop() async {
     await _methodChannel.invokeMethod("controller-stop");
+  }
+
+  @override
+  Future<void> changeModel(PlayerFactory playerFactory) async {
+    await _methodChannel.invokeMethod("android-change-mode",{"mode":playerFactory.mode});
   }
 
 }
