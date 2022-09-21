@@ -19,7 +19,7 @@ or equal to 3.3.2 to use this plug-in
 video_player_rtmp_ext: ^last_version
 ```
 
-Android
+##### Android
 * in project `build.gradle` add this line
 ```kotlin
 allprojects {
@@ -34,6 +34,21 @@ allprojects {
 * add `minSdkVersion` set to `19`
 
 * add `android:usesCleartextTraffic="true"` to you `AndroidManifest.xml` file
+
+
+##### iOS
+Update  `youProject/ios/Podfile`
+```
+target 'Runner' do
+  # update this line 
+  use_frameworks! :linkage => :static 
+  use_modular_headers!
+end
+```
+```
+pod install
+```
+
 
 ## 1.Simple example
 
