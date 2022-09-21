@@ -27,7 +27,7 @@ class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
     final args = {
       "url":url
     };
-    await _methodChannel.invokeMapMethod('init-controller',args);
+    await _methodChannel.invokeMethod('init-controller',args);
   }
 
   @override

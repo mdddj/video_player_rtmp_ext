@@ -11,7 +11,9 @@ import IJKMediaFramework
 
 
 ///视图组件
-class PluginView: NSObject,FlutterPlatformView{
+class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
+   
+    
     
     
     
@@ -21,6 +23,8 @@ class PluginView: NSObject,FlutterPlatformView{
     var viewId: Int64
     var fram: CGRect
     var flutterMethedChannel: FlutterMethodChannel
+    var eventChannel: FlutterEventChannel
+    var sink: FlutterEventSink!
     
     
     ///播放器实例
@@ -35,9 +39,12 @@ class PluginView: NSObject,FlutterPlatformView{
         self.viewId = viewId
         self.fram = fram
         self.flutterMethedChannel = FlutterMethodChannel(name: "video-player-rtmp-ext-\(String(viewId))", binaryMessenger: flutterPluginRegistrar.messenger())
+        self.eventChannel = FlutterEventChannel(name: "video-player-rtmp-ext-event-\(String(viewId))", binaryMessenger: flutterPluginRegistrar.messenger())
         super.init()
         self.playerView = UIView(frame: fram)
         self.flutterMethedChannel.setMethodCallHandler(handle)
+        self.eventChannel.setStreamHandler(self)
+        
     }
     
     
@@ -97,6 +104,9 @@ class PluginView: NSObject,FlutterPlatformView{
             self.playerView.addSubview(view!)
             controller.scalingMode = .aspectFit
             controller.prepareToPlay()
+            self.initChangeStateObserver()
+        
+            
         }
         result(true)
     }
@@ -126,5 +136,40 @@ class PluginView: NSObject,FlutterPlatformView{
             result(false)
             print("初始化失败")
         }
+    }
+
+    ///监听播放器状态
+    func initChangeStateObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object:  self.controller)
+    }
+    
+    ///加载变化回调
+    @objc func didChange(notif: Notification) {
+        let state = controller.loadState
+        print("变化监听State:  \(state)")
+        pushData(type: "load-state-event", data: state.rawValue)
+    }
+    
+    ///销毁全部的监听
+    func destoryChangeStateObserver() {
+        if(controller.isPlaying()){
+            controller.shutdown()
+        }
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        self.sink = events
+        return nil
+    }
+    
+    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        return nil
+    }
+    
+    ///传输数据到flutter端,flutter端使用一个map来接收和解析数据
+    func pushData(type: String,data: Any) {
+        let map = [type: data]
+        sink(map)
     }
 }

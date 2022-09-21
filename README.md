@@ -3,10 +3,23 @@
 
 A player supporting rtmp&rtmps live video
 
+
 ## Getting Started
 
 ```yaml
 video_player_rtmp_ext: ^last_version
+```
+
+Android
+in project `build.gradle` add this line
+```kotlin
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+        maven { url "https://maven.aliyun.com/repository/public" }
+    }
+}
 ```
 
 ## 1.Simple example

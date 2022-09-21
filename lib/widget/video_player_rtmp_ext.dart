@@ -30,7 +30,7 @@ class _VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
 
   late VideoPlayerRtmpExtController _platformController; ///操作原生的通道
   IJKPlayerController get controller => widget.controller;
-  bool _inited = false;
+
 
 
   @override
@@ -80,7 +80,6 @@ class _VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
     _platformController = VideoPlayerRtmpExtController(id);
     await _init();
     widget.viewCreated?.call(widget.controller);
-    _refreshUi(()=>_inited = true);
   }
 
   ///初始化准备工作
@@ -120,9 +119,10 @@ class _VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
 
 ///播放控制器
 class IJKPlayerController {
+  IJKPlayerController._();
 
   ///将要播放的URL
-  final String? playUrl;
+  String? playUrl;
 
   IJKPlayerController({this.playUrl});
 
