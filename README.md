@@ -22,6 +22,8 @@ allprojects {
 }
 ```
 
+and `minSdkVersion` set to `19`
+
 ## 1.Simple example
 
 * Initialize controller
