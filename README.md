@@ -29,7 +29,7 @@ allprojects {
 
 * add `minSdkVersion` set to `19`
 
-* add `android:usesCleartextTraffic="true"` to you `AndroidManifest.xml`
+* add `android:usesCleartextTraffic="true"` to you `AndroidManifest.xml` file
 
 ## 1.Simple example
 
