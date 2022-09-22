@@ -1,3 +1,7 @@
+## 0.1.0
+
+* ios : add some event delegate
+
 ## 0.0.5
 
 * fix ios sink is null error

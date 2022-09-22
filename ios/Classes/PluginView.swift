@@ -11,7 +11,12 @@ import IJKMediaFramework
 
 
 ///视图组件
-class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
+class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlOpenDelegate{
+    
+    func willOpenUrl(_ urlOpenData: IJKMediaUrlOpenData!) {
+        print("url 回调: \(urlOpenData.error)")
+    }
+    
    
     
     
@@ -105,6 +110,10 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
             view?.frame = self.playerView.frame
             self.playerView.addSubview(view!)
             controller.scalingMode = .aspectFit
+            controller.httpOpenDelegate = self
+            controller.tcpOpenDelegate = self
+            controller.liveOpenDelegate = self
+            controller.segmentOpenDelegate = self
             controller.prepareToPlay()
             self.initChangeStateObserver()
         
@@ -145,6 +154,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object:  self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerFindStreamInfo, object: self.controller)
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange3(notif:)), name: NSNotification.Name.IJKMPMediaPlaybackIsPreparedToPlayDidChange, object: self.controller)
     }
     
     ///加载变化回调
@@ -158,6 +168,10 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
         let state = controller.playbackState
         print("变化了回调:\(state)")
         pushData(type: "playbackState", data: state.rawValue)
+    }
+    @objc func didChange3(notif: Notification){
+        let p =  controller.isPreparedToPlay
+        print("变化3:::\(p)")
     }
     
     ///销毁全部的监听
