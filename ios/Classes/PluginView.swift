@@ -170,6 +170,10 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
     ///传输数据到flutter端,flutter端使用一个map来接收和解析数据
     func pushData(type: String,data: Any) {
         let map = [type: data]
+        guard sink != nil else {
+            print("通道为null,无法传输数据")
+            return
+        }
         sink(map)
     }
 }
