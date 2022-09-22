@@ -69,12 +69,15 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
             break
         case "controller-play":
             controller.play()
+            result(true)
             break;
         case "controller-dispose":
             controller.shutdown()
+            result(true)
             break
         case "controller-pause":
             controller.pause()
+            result(true)
             break
         case "controller-get-state":
             let isPlaying =  controller.isPlaying()
@@ -82,6 +85,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
             break
         case "controller-stop":
             controller.stop()
+            result(true)
             break
         default:
             break
@@ -94,8 +98,6 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
     func initController(args: Any,result: @escaping FlutterResult) {
         let params = args as! NSMutableDictionary
         let url = params["url"]
-        let scalingMode = params["scalingMode"] ?? 0
-        let autoPlay = params["auto-play"] ?? false
         print("swift===> 参数:\(params.description)")
         if case let url as String = url {
             self.controller = IJKFFMoviePlayerController.init(contentURL: URL.init(string: url), with:IJKFFOptions.byDefault())
@@ -141,13 +143,21 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
     ///监听播放器状态
     func initChangeStateObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object:  self.controller)
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: self.controller)
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerFindStreamInfo, object: self.controller)
     }
     
     ///加载变化回调
     @objc func didChange(notif: Notification) {
         let state = controller.loadState
         print("变化监听State:  \(state)")
-        pushData(type: "load-state-event", data: state.rawValue)
+        pushData(type: "loadState", data: state.rawValue)
+    }
+    
+    @objc func didChange2(notif: Notification){
+        let state = controller.playbackState
+        print("变化了回调:\(state)")
+        pushData(type: "playbackState", data: state.rawValue)
     }
     
     ///销毁全部的监听
@@ -164,6 +174,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler{
     }
     
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        destoryChangeStateObserver()
         return nil
     }
     

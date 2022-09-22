@@ -1,3 +1,7 @@
+## 0.0.5
+
+* fix ios sink is null error
+
 ## 0.0.4
 * android: add isPlaying api
 

@@ -1,4 +1,5 @@
 
+import 'package:flutter/services.dart';
 import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/video_player_rtmp_ext_method_channel.dart';
 
@@ -10,6 +11,11 @@ class VideoPlayerRtmpExtController {
   VideoPlayerRtmpExtController(this.viewId);
 
  late final channel = MethodChannelVideoPlayerRtmpExt(viewId);
+ late final eventChanel = EventChannel('video-player-rtmp-ext-event-$viewId');
+
+
+
+
 
  ///初始化
  Future<void> init() async {
