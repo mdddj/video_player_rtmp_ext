@@ -17,11 +17,6 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         print("url 回调: \(urlOpenData.error)")
     }
     
-   
-    
-    
-    
-    
     
     /// --- 插件相关实例初始化
     var flutterPluginRegistrar: FlutterPluginRegistrar
@@ -72,12 +67,20 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         case "init-controller":
             initController(args: call.arguments!,result: result)
             break
+        case "init-controller-file":
+            playByPaht(args: call.arguments!,result: result)
+            break
         case "controller-play":
             controller.play()
             result(true)
             break;
         case "controller-dispose":
+            if(controller.isPlaying()){
+                controller.stop()
+                print("log: Playing, stop playing...")
+            }
             controller.shutdown()
+            print("start free memory")
             result(true)
             break
         case "controller-pause":
@@ -99,29 +102,51 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     
     
     
-    ///初始化ijkplayer视图
+    ///初始化ijkplayer视图 播放网络URL
     func initController(args: Any,result: @escaping FlutterResult) {
         let params = args as! NSMutableDictionary
         let url = params["url"]
         print("swift===> 参数:\(params.description)")
         if case let url as String = url {
             self.controller = IJKFFMoviePlayerController.init(contentURL: URL.init(string: url), with:IJKFFOptions.byDefault())
-            let view = controller.view
-            view?.frame = self.playerView.frame
-            self.playerView.addSubview(view!)
-            controller.scalingMode = .aspectFit
-            controller.httpOpenDelegate = self
-            controller.tcpOpenDelegate = self
-            controller.liveOpenDelegate = self
-            controller.segmentOpenDelegate = self
-            controller.prepareToPlay()
-            self.initChangeStateObserver()
-        
-            
+            initView()
         }
         result(true)
     }
     
+    
+    ///播放本机文件
+    func playByPaht(args: Any,result: @escaping FlutterResult) {
+        let params = args as! NSMutableDictionary
+        if let filePath = params["url"] as? String {
+            if #available(iOS 16.0, *) {
+                 self.controller = IJKFFMoviePlayerController(contentURL: URL.init(filePath: filePath), with: IJKFFOptions.byDefault())
+             } else {
+                 self.controller = IJKFFMoviePlayerController(contentURL: URL(fileURLWithPath:filePath), with: IJKFFOptions.byDefault())
+             }
+             initView()
+        }
+      
+    }
+    
+    
+    func initView() {
+        let view = controller.view
+        view?.frame = self.playerView.frame
+        self.playerView.addSubview(view!)
+        controller.scalingMode = .aspectFit
+        self.initDelegate()
+        controller.prepareToPlay()
+        self.initChangeStateObserver()
+    }
+    
+    ///初始化监听
+    func initDelegate() {
+        controller.httpOpenDelegate = self
+        controller.tcpOpenDelegate = self
+        controller.liveOpenDelegate = self
+        controller.segmentOpenDelegate = self
+    }
    
     
     ///初始化(必要的),
@@ -140,12 +165,11 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
                 try session.setMode(.default)
             }
             try session.setActive(true)
-            print("初始化成功")
+    
             result(true)
             
         }catch{
             result(false)
-            print("初始化失败")
         }
     }
 
@@ -153,25 +177,26 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     func initChangeStateObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object:  self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: self.controller)
-        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerFindStreamInfo, object: self.controller)
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange1(notif:)), name: NSNotification.Name.IJKMPMoviePlayerFindStreamInfo, object: self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange3(notif:)), name: NSNotification.Name.IJKMPMediaPlaybackIsPreparedToPlayDidChange, object: self.controller)
     }
     
     ///加载变化回调
     @objc func didChange(notif: Notification) {
         let state = controller.loadState
-        print("变化监听State:  \(state)")
         pushData(type: "loadState", data: state.rawValue)
     }
-    
+    @objc func didChange1(notif: Notification){
+        let state = controller.duration
+        pushData(type: "duration", data: state)
+    }
     @objc func didChange2(notif: Notification){
         let state = controller.playbackState
-        print("变化了回调:\(state)")
         pushData(type: "playbackState", data: state.rawValue)
     }
     @objc func didChange3(notif: Notification){
         let p =  controller.isPreparedToPlay
-        print("变化3:::\(p)")
+        pushData(type: "isPreparedToPlay", data: p)
     }
     
     ///销毁全部的监听
@@ -183,22 +208,30 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     }
     
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        print(" ✅ sink init success!")
         self.sink = events
         return nil
     }
     
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        print("swift view on cancel")
         destoryChangeStateObserver()
+        if(controller.isPlaying()){
+            controller.shutdown();
+            print("释放内存")
+        }
+        
         return nil
     }
     
     ///传输数据到flutter端,flutter端使用一个map来接收和解析数据
     func pushData(type: String,data: Any) {
         let map = [type: data]
-        guard sink != nil else {
-            print("通道为null,无法传输数据")
-            return
+        if(sink != nil){
+            self.sink(map)
+        }else{
+            print("⚠️ ....sink is nil,send data fail")
         }
-        sink(map)
+        
     }
 }

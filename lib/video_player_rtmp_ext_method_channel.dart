@@ -1,39 +1,43 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:video_player_rtmp_ext/exceptions/exception.dart';
 import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
+import 'package:video_player_rtmp_ext/models/play_source.dart';
 
 import 'video_player_rtmp_ext_platform_interface.dart';
 
 class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
-
   final int viewId;
+
   MethodChannelVideoPlayerRtmpExt(this.viewId);
 
-  String get _methodChannelName {
-    return 'video-player-rtmp-ext-$viewId';
-  }
+  late final String _methodChannelName = 'video-player-rtmp-ext-$viewId';
+  late final String _eventChannelName = 'video-player-rtmp-ext-event-$viewId';
 
- late final MethodChannel _methodChannel = MethodChannel(_methodChannelName);
+  late final MethodChannel _methodChannel = MethodChannel(_methodChannelName);
+  late final EventChannel _eventChannel = EventChannel(_eventChannelName);
+
+  EventChannel get eventChannel => _eventChannel;
+
+  MethodChannel get methodChannel => _methodChannel;
 
   @override
   Future<void> init() async {
     final r = await _methodChannel.invokeMethod("init");
-    if(r==false){
+    if (r == false) {
       throw InitException(r.toString());
     }
   }
 
   @override
-  Future<void> initIJKPlayController(String url) async {
-    final args = {
-      "url":url
-    };
-    await _methodChannel.invokeMethod('init-controller',args);
+  Future<void> initIJKPlayController(PlaySource source) async {
+    await _methodChannel.invokeMethod('init-controller', source.params);
   }
 
   @override
   Future<void> play() async {
-    await  _methodChannel.invokeMethod("controller-play");
+    await _methodChannel.invokeMethod("controller-play");
   }
 
   @override
@@ -48,7 +52,7 @@ class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
 
   @override
   Future<bool> isPlaying() async {
-   return await _methodChannel.invokeMethod("controller-get-state");
+    return await _methodChannel.invokeMethod("controller-get-state");
   }
 
   @override
@@ -58,7 +62,6 @@ class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
 
   @override
   Future<void> changeModel(PlayerFactory playerFactory) async {
-    await _methodChannel.invokeMethod("android-change-mode",{"mode":playerFactory.mode});
+    await _methodChannel.invokeMethod("android-change-mode", {"mode": playerFactory.mode});
   }
-
 }

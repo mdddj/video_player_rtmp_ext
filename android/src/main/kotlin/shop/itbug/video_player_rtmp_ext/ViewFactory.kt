@@ -9,9 +9,7 @@ import io.flutter.plugin.platform.PlatformViewFactory
 import shop.itbug.video_player_rtmp_ext.view.IJKPlayerView
 
 class ViewFactory(private val flutterPluginBinding: FlutterPluginBinding, private val activity: Activity) : PlatformViewFactory(StandardMessageCodec.INSTANCE){
-
-
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        return IJKPlayerView(flutterPluginBinding,viewId,activity,context!!)
+        return IJKPlayerView(flutterPluginBinding, viewId, context!!)
     }
 }

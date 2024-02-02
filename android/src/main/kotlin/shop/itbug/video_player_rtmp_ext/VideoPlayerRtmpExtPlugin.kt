@@ -12,11 +12,11 @@ class VideoPlayerRtmpExtPlugin: FlutterPlugin,ActivityAware {
   private lateinit var flutterPluginBinding: FlutterPluginBinding
 
 
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPluginBinding) {
+  override fun onAttachedToEngine(flutterPluginBinding: FlutterPluginBinding) {
     this.flutterPluginBinding = flutterPluginBinding
   }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPluginBinding) {
+  override fun onDetachedFromEngine(binding: FlutterPluginBinding) {
 
   }
 
