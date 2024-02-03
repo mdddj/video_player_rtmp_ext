@@ -39,3 +39,17 @@ Map<String, dynamic> _$$StateListenerModelImplToJson(
       'playbackState': instance.playbackState,
       'dataType': instance.$type,
     };
+
+_$OnPlayErrorListenerModelImpl _$$OnPlayErrorListenerModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OnPlayErrorListenerModelImpl(
+      error: json['error'],
+      $type: json['dataType'] as String?,
+    );
+
+Map<String, dynamic> _$$OnPlayErrorListenerModelImplToJson(
+        _$OnPlayErrorListenerModelImpl instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'dataType': instance.$type,
+    };

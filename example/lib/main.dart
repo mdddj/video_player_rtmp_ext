@@ -3,8 +3,7 @@ import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/models/play_source.dart';
 import 'package:video_player_rtmp_ext/widget/video_player_rtmp_ext.dart';
 
-const line1 =
-    'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8';
+const line1 = 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8';
 const line2 = 'rtmp://ns8.indexforce.com/home/mystream';
 const line3 = 'rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp';
 
@@ -30,22 +29,44 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
     final size = MediaQuery.of(context).size;
     final padding = MediaQuery.of(context).padding;
     return Scaffold(
-      appBar: AppBar(title: const Text("live broadcase")),
-      body: AspectRatio(
-        aspectRatio: size.width / (size.height - kToolbarHeight - padding.top),
-        child: VideoPlayerRtmpExtWidget(
-          controller: controller,
-          viewCreated: (IJKPlayerController _) async {
-            controller.addListener((model) {
-              print(model);
-            });
-            if (controller.isAndroid) {
-              await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
-            }
-            await controller.play();
-
-          },
-        ),
+      body: Stack(
+        children: [
+          AspectRatio(
+            aspectRatio: size.width / (size.height - padding.top),
+            child: VideoPlayerRtmpExtWidget(
+              controller: controller,
+              viewCreated: (IJKPlayerController _) async {
+                controller.addListener((model) {
+                  print(model);
+                });
+                if (controller.isAndroid) {
+                  await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
+                }
+                await controller.play();
+              },
+            ),
+          ),
+          Positioned(
+              bottom: padding.bottom,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(onPressed: () {
+                    controller.play();
+                  }, icon: Icon(Icons.play_arrow, color: Colors.white)),
+                  IconButton(
+                      onPressed: () {
+                        controller.pause();
+                      },
+                      icon: Icon(
+                        Icons.pause,
+                        color: Colors.white,
+                      ))
+                ],
+              ))
+        ],
       ),
     );
   }

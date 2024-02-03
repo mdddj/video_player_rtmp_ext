@@ -20,6 +20,8 @@ VideoListenerModel _$VideoListenerModelFromJson(Map<String, dynamic> json) {
       return ProgressListenerModel.fromJson(json);
     case 'sendCallbackEvent':
       return StateListenerModel.fromJson(json);
+    case 'onPlayError':
+      return OnPlayErrorListenerModel.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'dataType', 'VideoListenerModel',
@@ -35,6 +37,7 @@ mixin _$VideoListenerModel {
             int progress, int secProgress, int currentPosition, int duration)
         progress,
     required TResult Function(int playbackState) playbackState,
+    required TResult Function(Object? error) onPlayError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,6 +46,7 @@ mixin _$VideoListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult? Function(int playbackState)? playbackState,
+    TResult? Function(Object? error)? onPlayError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +55,7 @@ mixin _$VideoListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult Function(int playbackState)? playbackState,
+    TResult Function(Object? error)? onPlayError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -58,18 +63,21 @@ mixin _$VideoListenerModel {
   TResult map<TResult extends Object?>({
     required TResult Function(ProgressListenerModel value) progress,
     required TResult Function(StateListenerModel value) playbackState,
+    required TResult Function(OnPlayErrorListenerModel value) onPlayError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProgressListenerModel value)? progress,
     TResult? Function(StateListenerModel value)? playbackState,
+    TResult? Function(OnPlayErrorListenerModel value)? onPlayError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProgressListenerModel value)? progress,
     TResult Function(StateListenerModel value)? playbackState,
+    TResult Function(OnPlayErrorListenerModel value)? onPlayError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -207,6 +215,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
             int progress, int secProgress, int currentPosition, int duration)
         progress,
     required TResult Function(int playbackState) playbackState,
+    required TResult Function(Object? error) onPlayError,
   }) {
     return progress(this.progress, secProgress, currentPosition, duration);
   }
@@ -218,6 +227,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult? Function(int playbackState)? playbackState,
+    TResult? Function(Object? error)? onPlayError,
   }) {
     return progress?.call(
         this.progress, secProgress, currentPosition, duration);
@@ -230,6 +240,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult Function(int playbackState)? playbackState,
+    TResult Function(Object? error)? onPlayError,
     required TResult orElse(),
   }) {
     if (progress != null) {
@@ -243,6 +254,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
   TResult map<TResult extends Object?>({
     required TResult Function(ProgressListenerModel value) progress,
     required TResult Function(StateListenerModel value) playbackState,
+    required TResult Function(OnPlayErrorListenerModel value) onPlayError,
   }) {
     return progress(this);
   }
@@ -252,6 +264,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProgressListenerModel value)? progress,
     TResult? Function(StateListenerModel value)? playbackState,
+    TResult? Function(OnPlayErrorListenerModel value)? onPlayError,
   }) {
     return progress?.call(this);
   }
@@ -261,6 +274,7 @@ class _$ProgressListenerModelImpl extends ProgressListenerModel {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProgressListenerModel value)? progress,
     TResult Function(StateListenerModel value)? playbackState,
+    TResult Function(OnPlayErrorListenerModel value)? onPlayError,
     required TResult orElse(),
   }) {
     if (progress != null) {
@@ -377,6 +391,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
             int progress, int secProgress, int currentPosition, int duration)
         progress,
     required TResult Function(int playbackState) playbackState,
+    required TResult Function(Object? error) onPlayError,
   }) {
     return playbackState(this.playbackState);
   }
@@ -388,6 +403,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult? Function(int playbackState)? playbackState,
+    TResult? Function(Object? error)? onPlayError,
   }) {
     return playbackState?.call(this.playbackState);
   }
@@ -399,6 +415,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
             int progress, int secProgress, int currentPosition, int duration)?
         progress,
     TResult Function(int playbackState)? playbackState,
+    TResult Function(Object? error)? onPlayError,
     required TResult orElse(),
   }) {
     if (playbackState != null) {
@@ -412,6 +429,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
   TResult map<TResult extends Object?>({
     required TResult Function(ProgressListenerModel value) progress,
     required TResult Function(StateListenerModel value) playbackState,
+    required TResult Function(OnPlayErrorListenerModel value) onPlayError,
   }) {
     return playbackState(this);
   }
@@ -421,6 +439,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ProgressListenerModel value)? progress,
     TResult? Function(StateListenerModel value)? playbackState,
+    TResult? Function(OnPlayErrorListenerModel value)? onPlayError,
   }) {
     return playbackState?.call(this);
   }
@@ -430,6 +449,7 @@ class _$StateListenerModelImpl extends StateListenerModel {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ProgressListenerModel value)? progress,
     TResult Function(StateListenerModel value)? playbackState,
+    TResult Function(OnPlayErrorListenerModel value)? onPlayError,
     required TResult orElse(),
   }) {
     if (playbackState != null) {
@@ -458,4 +478,172 @@ abstract class StateListenerModel extends VideoListenerModel {
   @JsonKey(ignore: true)
   _$$StateListenerModelImplCopyWith<_$StateListenerModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnPlayErrorListenerModelImplCopyWith<$Res> {
+  factory _$$OnPlayErrorListenerModelImplCopyWith(
+          _$OnPlayErrorListenerModelImpl value,
+          $Res Function(_$OnPlayErrorListenerModelImpl) then) =
+      __$$OnPlayErrorListenerModelImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Object? error});
+}
+
+/// @nodoc
+class __$$OnPlayErrorListenerModelImplCopyWithImpl<$Res>
+    extends _$VideoListenerModelCopyWithImpl<$Res,
+        _$OnPlayErrorListenerModelImpl>
+    implements _$$OnPlayErrorListenerModelImplCopyWith<$Res> {
+  __$$OnPlayErrorListenerModelImplCopyWithImpl(
+      _$OnPlayErrorListenerModelImpl _value,
+      $Res Function(_$OnPlayErrorListenerModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(_$OnPlayErrorListenerModelImpl(
+      error: freezed == error ? _value.error : error,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OnPlayErrorListenerModelImpl extends OnPlayErrorListenerModel {
+  const _$OnPlayErrorListenerModelImpl({this.error, final String? $type})
+      : $type = $type ?? 'onPlayError',
+        super._();
+
+  factory _$OnPlayErrorListenerModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OnPlayErrorListenerModelImplFromJson(json);
+
+  @override
+  final Object? error;
+
+  @JsonKey(name: 'dataType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'VideoListenerModel.onPlayError(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnPlayErrorListenerModelImpl &&
+            const DeepCollectionEquality().equals(other.error, error));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnPlayErrorListenerModelImplCopyWith<_$OnPlayErrorListenerModelImpl>
+      get copyWith => __$$OnPlayErrorListenerModelImplCopyWithImpl<
+          _$OnPlayErrorListenerModelImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            int progress, int secProgress, int currentPosition, int duration)
+        progress,
+    required TResult Function(int playbackState) playbackState,
+    required TResult Function(Object? error) onPlayError,
+  }) {
+    return onPlayError(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            int progress, int secProgress, int currentPosition, int duration)?
+        progress,
+    TResult? Function(int playbackState)? playbackState,
+    TResult? Function(Object? error)? onPlayError,
+  }) {
+    return onPlayError?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            int progress, int secProgress, int currentPosition, int duration)?
+        progress,
+    TResult Function(int playbackState)? playbackState,
+    TResult Function(Object? error)? onPlayError,
+    required TResult orElse(),
+  }) {
+    if (onPlayError != null) {
+      return onPlayError(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProgressListenerModel value) progress,
+    required TResult Function(StateListenerModel value) playbackState,
+    required TResult Function(OnPlayErrorListenerModel value) onPlayError,
+  }) {
+    return onPlayError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProgressListenerModel value)? progress,
+    TResult? Function(StateListenerModel value)? playbackState,
+    TResult? Function(OnPlayErrorListenerModel value)? onPlayError,
+  }) {
+    return onPlayError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProgressListenerModel value)? progress,
+    TResult Function(StateListenerModel value)? playbackState,
+    TResult Function(OnPlayErrorListenerModel value)? onPlayError,
+    required TResult orElse(),
+  }) {
+    if (onPlayError != null) {
+      return onPlayError(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OnPlayErrorListenerModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class OnPlayErrorListenerModel extends VideoListenerModel {
+  const factory OnPlayErrorListenerModel({final Object? error}) =
+      _$OnPlayErrorListenerModelImpl;
+  const OnPlayErrorListenerModel._() : super._();
+
+  factory OnPlayErrorListenerModel.fromJson(Map<String, dynamic> json) =
+      _$OnPlayErrorListenerModelImpl.fromJson;
+
+  Object? get error;
+  @JsonKey(ignore: true)
+  _$$OnPlayErrorListenerModelImplCopyWith<_$OnPlayErrorListenerModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

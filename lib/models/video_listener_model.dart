@@ -13,6 +13,10 @@ class VideoListenerModel with _$VideoListenerModel {
 
   @FreezedUnionValue('sendCallbackEvent')
   const factory VideoListenerModel.playbackState({required int playbackState}) = StateListenerModel;
+  @FreezedUnionValue("onPlayError")
+  const factory VideoListenerModel.onPlayError({
+    Object? error
+}) = OnPlayErrorListenerModel;
 
   factory VideoListenerModel.fromJson(Map<String, dynamic> json) => _$VideoListenerModelFromJson(json);
 }

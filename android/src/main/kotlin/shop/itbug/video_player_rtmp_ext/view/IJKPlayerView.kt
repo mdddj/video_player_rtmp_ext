@@ -55,7 +55,6 @@ class IJKPlayerView(
 
     init {
         methedChannel.setMethodCallHandler(this)
-
     }
 
     override fun getView(): View? {
@@ -271,6 +270,7 @@ class IJKPlayerView(
 
     override fun onPlayError(url: String?, vararg objects: Any?) {
         logger("onPlayError")
+        sink?.success(mapOf("dataType" to "onPlayError","error" to objects))
     }
 
     override fun onClickStartThumb(url: String?, vararg objects: Any?) {
