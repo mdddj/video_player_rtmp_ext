@@ -138,6 +138,11 @@ class IJKPlayerController {
     await state.play();
   }
 
+  ///恢复播放.
+  Future<void> resume() async {
+    await state._platformController.resume();
+  }
+
   ///结束播放
   Future<void> stop() async {
     await state._platformController.stop();

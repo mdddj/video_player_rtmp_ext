@@ -23,6 +23,9 @@ abstract class VideoPlayerRtmpExtPlatform extends PlatformInterface {
   ///暂停
   Future<void> pause();
 
+  ///controller-resume
+  Future<void> resume();
+
   ///是否正在播放
   Future<bool> isPlaying();
 

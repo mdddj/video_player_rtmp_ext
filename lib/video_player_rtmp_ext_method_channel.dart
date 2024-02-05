@@ -64,4 +64,9 @@ class MethodChannelVideoPlayerRtmpExt extends VideoPlayerRtmpExtPlatform {
   Future<void> changeModel(PlayerFactory playerFactory) async {
     await _methodChannel.invokeMethod("android-change-mode", {"mode": playerFactory.mode});
   }
+
+  @override
+  Future<void> resume() async {
+    await _methodChannel.invokeMethod("controller-resume");
+  }
 }

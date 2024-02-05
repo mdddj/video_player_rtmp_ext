@@ -73,7 +73,6 @@ class IJKPlayerView(
             "init-controller" -> {
                 logger("init play controller : ${call.arguments}")
                 initController(call)
-
                 result.success(true)
             }
 
@@ -91,6 +90,10 @@ class IJKPlayerView(
 
             "controller-stop" -> {
                 player.onVideoReset()
+                result.success(true)
+            }
+            "controller-resume" -> {
+                player.onVideoResume()
                 result.success(true)
             }
 

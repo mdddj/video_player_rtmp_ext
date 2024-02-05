@@ -1,6 +1,8 @@
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/models/play_source.dart';
+import 'package:video_player_rtmp_ext/models/video_listener_model.dart';
 import 'package:video_player_rtmp_ext/widget/video_player_rtmp_ext.dart';
 
 const line1 = 'http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8';
@@ -36,9 +38,7 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
             child: VideoPlayerRtmpExtWidget(
               controller: controller,
               viewCreated: (IJKPlayerController _) async {
-                controller.addListener((model) {
-                  print(model);
-                });
+                controller.addListener(onStateChange);
                 if (controller.isAndroid) {
                   await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
                 }
@@ -46,6 +46,15 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
               },
             ),
           ),
+          Positioned(top: padding.top,left: 0,right: 0,child: Row(
+            children: [
+              IconButton(onPressed: (){
+                openFile().then((value) {
+                  print(value);
+                });
+              }, icon: const Icon(Icons.file_copy))
+            ],
+          ),),
           Positioned(
               bottom: padding.bottom,
               left: 0,
@@ -54,13 +63,13 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(onPressed: () {
-                    controller.play();
-                  }, icon: Icon(Icons.play_arrow, color: Colors.white)),
+                    controller.resume();
+                  }, icon: const Icon(Icons.play_arrow, color: Colors.white)),
                   IconButton(
                       onPressed: () {
                         controller.pause();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.pause,
                         color: Colors.white,
                       ))
@@ -81,6 +90,11 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
 
   Future<void> isPlaying() async {
     final isPlaying = await controller.isPlaying;
+  }
+
+  ///player state change callback
+  void onStateChange(VideoListenerModel model){
+    debugPrint("状态变化 changed: $model");
   }
 
   @override

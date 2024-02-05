@@ -86,6 +86,11 @@ controller.pause();
 controller.stop();
 ```
 
+* Resume
+```dart
+controller.resume();
+```
+
 * Judge whether it is playing
 ```dart
 final isPlaying = await controller.isPlaying;
@@ -97,6 +102,16 @@ final isPlaying = await controller.isPlaying;
 if(controller.isAndroid){
    await controller.setPlayManager(PlayerFactory.exo2PlayerManager);
 }
+```
+
+* player state change callback
+```dart
+controller.addListener(onStateChange);
+...
+void onStateChange(VideoListenerModel model){
+  debugPrint("$model");
+}
+
 ```
 
 

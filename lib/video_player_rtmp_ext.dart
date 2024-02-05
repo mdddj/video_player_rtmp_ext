@@ -75,6 +75,11 @@ class VideoPlayerRtmpExtController {
     await channel.stop();
   }
 
+  Future<void> resume() async {
+    await channel.resume();
+  }
+
+
   ///切换播放器内核
   Future<void> changeModel(PlayerFactory playerFactory) async {
     await channel.changeModel(playerFactory);
@@ -103,11 +108,9 @@ class VideoPlayerRtmpExtController {
 
 
   void _dataCallback(event) {
-    print('监听:$event');
     if(event case final Map<String,dynamic> map when map.isNotEmpty){
       try{
         final model = VideoListenerModel.fromJson(map);
-        print(model);
         for (var element in _listeners) {
           element.call(model);
         }
