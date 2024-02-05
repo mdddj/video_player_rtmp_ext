@@ -95,6 +95,13 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
   ///player state change callback
   void onStateChange(VideoListenerModel model){
     debugPrint("状态变化 changed: $model");
+    model.when(progress: (progress, secProgress, currentPosition, duration) {
+      // todo : Playback progress
+    }, playbackState: (playbackState) {
+      // todo: Playback state
+    }, onPlayError: (error) {
+      // todo : error callback detail info
+    },);
   }
 
   @override

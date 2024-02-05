@@ -110,6 +110,13 @@ controller.addListener(onStateChange);
 ...
 void onStateChange(VideoListenerModel model){
   debugPrint("$model");
+  model.when(progress: (progress, secProgress, currentPosition, duration) {
+  // todo : Playback progress
+  }, playbackState: (playbackState) {
+  // todo: Playback state
+  }, onPlayError: (error) {
+  // todo : error callback detail info
+  },);
 }
 
 ```
