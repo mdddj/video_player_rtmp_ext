@@ -106,6 +106,7 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
 
   @override
   void dispose() {
+    controller.removeListener(onStateChange);
     super.dispose();
   }
 }

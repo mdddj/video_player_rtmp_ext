@@ -108,9 +108,11 @@ class VideoPlayerRtmpExtController {
 
 
   void _dataCallback(event) {
-    if(event case final Map<String,dynamic> map when map.isNotEmpty){
+    if(event case final Map<Object?,Object?> map when map.isNotEmpty){
       try{
-        final model = VideoListenerModel.fromJson(map);
+
+        final model = VideoListenerModel.fromJson(map.toDynamicMap());
+        debugPrint("listener len: ${_listeners.length}");
         for (var element in _listeners) {
           element.call(model);
         }
@@ -119,4 +121,17 @@ class VideoPlayerRtmpExtController {
       }
     }
   }
+}
+
+
+extension _MapEx on Map<Object?,Object?> {
+  Map<String,dynamic> toDynamicMap() {
+   var r = <String,dynamic>{};
+   forEach((key, value) {
+     if(key!=null && value!=null){
+       r['$key'] = value;
+     }
+   });
+   return r;
+}
 }

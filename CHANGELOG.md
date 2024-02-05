@@ -1,3 +1,11 @@
+## 0.1.2
+
+bug fix
+
+## 0.1.1
+
+* android: add listener callback
+
 ## 0.1.0
 
 * ios : add some event delegate

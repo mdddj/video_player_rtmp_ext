@@ -63,8 +63,6 @@ class IJKPlayerView(
 
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-
-        println("进来了:${call.method} ${call.arguments} ")
         when (call.method) {
             "init" -> {
                 result.success(true)
@@ -155,7 +153,7 @@ class IJKPlayerView(
     ///视图销毁
     override fun dispose() {
         Log.e(TAG, "视图销毁")
-        player.release()
+//        player.release()
     }
 
 

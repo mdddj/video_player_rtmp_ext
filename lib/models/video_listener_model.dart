@@ -18,5 +18,5 @@ class VideoListenerModel with _$VideoListenerModel {
     Object? error
 }) = OnPlayErrorListenerModel;
 
-  factory VideoListenerModel.fromJson(Map<String, dynamic> json) => _$VideoListenerModelFromJson(json);
+  factory VideoListenerModel.fromJson(dynamic json) => _$VideoListenerModelFromJson(json);
 }
