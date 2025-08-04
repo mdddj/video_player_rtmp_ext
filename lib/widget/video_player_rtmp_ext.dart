@@ -21,10 +21,17 @@ class VideoPlayerRtmpExtWidget extends StatefulWidget {
   final ValueChanged<VideoPlayerState>? stateChanged;
   final ValueChanged<VideoLoadStatus>? loadStatusChanged;
 
-  const VideoPlayerRtmpExtWidget({Key? key, this.initWidget, this.viewCreated, required this.controller, this.stateChanged, this.loadStatusChanged}) : super(key: key);
+  const VideoPlayerRtmpExtWidget(
+      {super.key,
+      this.initWidget,
+      this.viewCreated,
+      required this.controller,
+      this.stateChanged,
+      this.loadStatusChanged});
 
   @override
-  State<VideoPlayerRtmpExtWidget> createState() => VideoPlayerRtmpExtWidgetState();
+  State<VideoPlayerRtmpExtWidget> createState() =>
+      VideoPlayerRtmpExtWidgetState();
 }
 
 class VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
@@ -77,12 +84,14 @@ class VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
 
   ///ios端视图
   Widget get _buildIosWidget {
-    return UiKitView(viewType: _UIKITVIEW_ID, onPlatformViewCreated: _platformSetup);
+    return UiKitView(
+        viewType: _UIKITVIEW_ID, onPlatformViewCreated: _platformSetup);
   }
 
   ///安卓端视图
   Widget get _buildAndroidWidget {
-    return AndroidView(viewType: _ANDROIDVIEW_ID, onPlatformViewCreated: _platformSetup);
+    return AndroidView(
+        viewType: _ANDROIDVIEW_ID, onPlatformViewCreated: _platformSetup);
   }
 
   ///视图创建完毕
@@ -113,7 +122,6 @@ class VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
     _platformController.dispose();
     super.dispose();
   }
-
 }
 
 ///播放控制器
@@ -149,7 +157,8 @@ class IJKPlayerController {
   }
 
   ///是否正在播放中
-  Future<bool> get isPlaying async => await state._platformController.isPlaying();
+  Future<bool> get isPlaying async =>
+      await state._platformController.isPlaying();
 
   /// 切换内核
   /// only android
@@ -164,11 +173,11 @@ class IJKPlayerController {
 
   bool get isAndroid => Platform.isAndroid;
 
-  void addListener(VideoListenCallback listener){
+  void addListener(VideoListenCallback listener) {
     state._platformController.addListener(listener);
   }
 
-  void removeListener(VideoListenCallback listener){
+  void removeListener(VideoListenCallback listener) {
     state._platformController.removeListener(listener);
   }
 }

@@ -1,3 +1,7 @@
+## 0.2.0
+
+* upgrade flutter to 3.29.3
+
 ## 0.1.2
 
 bug fix

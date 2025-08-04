@@ -6,23 +6,23 @@ part 'play_source.freezed.dart';
 
 extension PlaySourceEx on PlaySource {
   Map<String,dynamic> get params {
-    return map(file: (value) {
-      return {
-        "url": value.file.path,
+    return switch(this){
+      _PlaySourceWithFile(:final file) => {
+        "url": file.path,
         "type": 2
-      };
-    }, network: (value) {
-      return {
-        "url": value.uri.toString(),
+      },
+      _PlaySourceWithNetwork(:final uri) => {
+        "url": uri.toString(),
         "type": 1
-      };
-    },);
+      },
+    };
+
   }
 }
 
 /// 播放资源类型
 @freezed
-class PlaySource with _$PlaySource {
+sealed class PlaySource with _$PlaySource {
   const PlaySource._();
 
   const factory PlaySource.file({

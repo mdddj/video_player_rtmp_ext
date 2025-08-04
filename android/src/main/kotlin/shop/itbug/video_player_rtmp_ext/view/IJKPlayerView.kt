@@ -38,7 +38,7 @@ class IJKPlayerView(
     private val option = GSYVideoOptionBuilder()
 
 
-    private val methedChannel: MethodChannel =
+    private val methodChannel: MethodChannel =
         MethodChannel(flutterPluginBinding.binaryMessenger, "video-player-rtmp-ext-$viewId")
     private var eventChannel: EventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "video-player-rtmp-ext-event-$viewId")
 
@@ -54,7 +54,7 @@ class IJKPlayerView(
     }
 
     init {
-        methedChannel.setMethodCallHandler(this)
+        methodChannel.setMethodCallHandler(this)
     }
 
     override fun getView(): View? {
@@ -105,7 +105,6 @@ class IJKPlayerView(
                 result.success(isPlaying)
             }
 
-
             "controller-dispose" -> {
                 ///销毁
                 player.release()
@@ -133,9 +132,8 @@ class IJKPlayerView(
 
     ///初始化
     private fun initController(call: MethodCall) {
-        val args = call.getParamsMap()
-        val url = args["url"]!! as String
-        val type = args["type"] as Int
+        val url = call.argument<String>("url")
+        val type = call.argument<Int>("type")
         /// 1-网络文件
         /// 2-本地文件
         if (type == 1) {
@@ -159,7 +157,7 @@ class IJKPlayerView(
 
     ///切换内核
     private fun changeManager(call: MethodCall) {
-        when (call.getParamsMap()["mode"]!! as Int) {
+        when (call.argument<Int>("mode")) {
             0 -> {
                 PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
                 CacheFactory.setCacheManager(ExoPlayerCacheManager::class.java)
@@ -319,7 +317,6 @@ class IJKPlayerView(
 
 }
 
-fun MethodCall.getParamsMap(): Map<String, Any> = arguments as Map<String, Any>
 
 fun MethodChannel.Result.returnError(customError: CustomError) {
     error(customError.code, customError.message, null)

@@ -6,18 +6,18 @@ part of 'video_listener_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProgressListenerModelImpl _$$ProgressListenerModelImplFromJson(
+ProgressListenerModel _$ProgressListenerModelFromJson(
         Map<String, dynamic> json) =>
-    _$ProgressListenerModelImpl(
-      progress: json['progress'] as int,
-      secProgress: json['secProgress'] as int,
-      currentPosition: json['currentPosition'] as int,
-      duration: json['duration'] as int,
+    ProgressListenerModel(
+      progress: (json['progress'] as num).toInt(),
+      secProgress: (json['secProgress'] as num).toInt(),
+      currentPosition: (json['currentPosition'] as num).toInt(),
+      duration: (json['duration'] as num).toInt(),
       $type: json['dataType'] as String?,
     );
 
-Map<String, dynamic> _$$ProgressListenerModelImplToJson(
-        _$ProgressListenerModelImpl instance) =>
+Map<String, dynamic> _$ProgressListenerModelToJson(
+        ProgressListenerModel instance) =>
     <String, dynamic>{
       'progress': instance.progress,
       'secProgress': instance.secProgress,
@@ -26,29 +26,27 @@ Map<String, dynamic> _$$ProgressListenerModelImplToJson(
       'dataType': instance.$type,
     };
 
-_$StateListenerModelImpl _$$StateListenerModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$StateListenerModelImpl(
-      playbackState: json['playbackState'] as int,
+StateListenerModel _$StateListenerModelFromJson(Map<String, dynamic> json) =>
+    StateListenerModel(
+      playbackState: (json['playbackState'] as num).toInt(),
       $type: json['dataType'] as String?,
     );
 
-Map<String, dynamic> _$$StateListenerModelImplToJson(
-        _$StateListenerModelImpl instance) =>
+Map<String, dynamic> _$StateListenerModelToJson(StateListenerModel instance) =>
     <String, dynamic>{
       'playbackState': instance.playbackState,
       'dataType': instance.$type,
     };
 
-_$OnPlayErrorListenerModelImpl _$$OnPlayErrorListenerModelImplFromJson(
+OnPlayErrorListenerModel _$OnPlayErrorListenerModelFromJson(
         Map<String, dynamic> json) =>
-    _$OnPlayErrorListenerModelImpl(
+    OnPlayErrorListenerModel(
       error: json['error'],
       $type: json['dataType'] as String?,
     );
 
-Map<String, dynamic> _$$OnPlayErrorListenerModelImplToJson(
-        _$OnPlayErrorListenerModelImpl instance) =>
+Map<String, dynamic> _$OnPlayErrorListenerModelToJson(
+        OnPlayErrorListenerModel instance) =>
     <String, dynamic>{
       'error': instance.error,
       'dataType': instance.$type,

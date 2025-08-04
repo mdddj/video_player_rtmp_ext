@@ -1,6 +1,6 @@
 # video_player_rtmp_ext
 [![pub](https://badgen.net/pub/v/video_player_rtmp_ext)](https://pub.dev/packages/video_player_rtmp_ext)
-<a href="https://flutter.dev/docs/get-started/install/windows"><img src="https://badgen.net/badge/flutter/v3.3.2/blue" /></a>
+<a href="https://flutter.dev/docs/get-started/install/windows"><img src="https://badgen.net/badge/flutter/v3.29.3/blue" /></a>
 <a href="https://jq.qq.com/?_wv=1027&k=Z0AHodXB"><img src="https://badgen.net/badge/platform/Android🌲iOS/pink" /></a>
 
 A player supporting rtmp,rtmps,m3u8 live video

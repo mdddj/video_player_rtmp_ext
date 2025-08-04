@@ -5,7 +5,7 @@ part 'video_listener_model.freezed.dart';
 part 'video_listener_model.g.dart';
 
 @Freezed(unionKey: "dataType")
-class VideoListenerModel with _$VideoListenerModel {
+sealed class VideoListenerModel with _$VideoListenerModel {
   const VideoListenerModel._();
 
   @FreezedUnionValue("ProgressListener")

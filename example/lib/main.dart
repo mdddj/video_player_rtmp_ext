@@ -50,7 +50,6 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
             children: [
               IconButton(onPressed: (){
                 openFile().then((value) {
-                  print(value);
                 });
               }, icon: const Icon(Icons.file_copy))
             ],
@@ -95,13 +94,12 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
   ///player state change callback
   void onStateChange(VideoListenerModel model){
     debugPrint("状态变化 changed: $model");
-    model.when(progress: (progress, secProgress, currentPosition, duration) {
-      // todo : Playback progress
-    }, playbackState: (playbackState) {
-      // todo: Playback state
-    }, onPlayError: (error) {
-      // todo : error callback detail info
-    },);
+    switch(model){
+      case ProgressListenerModel():
+      case StateListenerModel():
+      case OnPlayErrorListenerModel():
+    }
+
   }
 
   @override

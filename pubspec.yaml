@@ -1,6 +1,6 @@
 name: video_player_rtmp_ext
 description: A player supporting rtmp&rtmps live video
-version: 0.1.2
+version: 0.2.1
 homepage: https://github.com/mdddj/video_player_rtmp_ext
 
 environment:
@@ -10,17 +10,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
   plugin_platform_interface: ^2.1.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
-  build_runner: ^2.4.8
-  freezed: ^2.4.7
-  json_serializable: ^6.7.1
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.15
+  freezed: ^3.0.6
+  json_serializable: ^6.9.5
 
 flutter:
   plugin:

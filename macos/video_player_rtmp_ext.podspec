@@ -6,9 +6,7 @@ Pod::Spec.new do |s|
   s.name             = 'video_player_rtmp_ext'
   s.version          = '0.0.1'
   s.summary          = 'A player supporting rtmp&rtmps live video'
-  s.description      = <<-DESC
-A player supporting rtmp&rtmps live video
-                       DESC
+  s.description      = 'A player supporting rtmp&rtmps live video and IJKPlayer'
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
