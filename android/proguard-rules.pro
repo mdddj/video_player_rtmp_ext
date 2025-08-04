@@ -29,3 +29,16 @@
 -dontwarn com.alivc.**
 -dontwarn com.aliyun.**
 -dontwarn com.cicada.**
+
+# Keep Flutter plugin classes
+-keep class shop.itbug.video_player_rtmp_ext.VideoPlayerRtmpExtPlugin { *; }
+-keep class shop.itbug.video_player_rtmp_ext.ViewFactory { *; }
+
+# Keep all Flutter plugin classes in the package
+-keep class shop.itbug.video_player_rtmp_ext.** { *; }
+
+# Suppress warnings for missing classes
+-dontwarn shop.itbug.video_player_rtmp_ext.VideoPlayerRtmpExtPlugin
+
+# Suppress warnings for StringConcatFactory used by Kotlin
+-dontwarn java.lang.invoke.StringConcatFactory
