@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Add proguard-rules configuration
+
 ## 0.2.0
 
 * upgrade flutter to 3.29.3

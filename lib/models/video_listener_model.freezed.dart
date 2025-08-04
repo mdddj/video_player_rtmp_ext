@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -52,6 +51,204 @@ mixin _$VideoListenerModel {
 class $VideoListenerModelCopyWith<$Res> {
   $VideoListenerModelCopyWith(
       VideoListenerModel _, $Res Function(VideoListenerModel) __);
+}
+
+/// Adds pattern-matching-related methods to [VideoListenerModel].
+extension VideoListenerModelPatterns on VideoListenerModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ProgressListenerModel value)? progress,
+    TResult Function(StateListenerModel value)? playbackState,
+    TResult Function(OnPlayErrorListenerModel value)? onPlayError,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel() when progress != null:
+        return progress(_that);
+      case StateListenerModel() when playbackState != null:
+        return playbackState(_that);
+      case OnPlayErrorListenerModel() when onPlayError != null:
+        return onPlayError(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ProgressListenerModel value) progress,
+    required TResult Function(StateListenerModel value) playbackState,
+    required TResult Function(OnPlayErrorListenerModel value) onPlayError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel():
+        return progress(_that);
+      case StateListenerModel():
+        return playbackState(_that);
+      case OnPlayErrorListenerModel():
+        return onPlayError(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ProgressListenerModel value)? progress,
+    TResult? Function(StateListenerModel value)? playbackState,
+    TResult? Function(OnPlayErrorListenerModel value)? onPlayError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel() when progress != null:
+        return progress(_that);
+      case StateListenerModel() when playbackState != null:
+        return playbackState(_that);
+      case OnPlayErrorListenerModel() when onPlayError != null:
+        return onPlayError(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            int progress, int secProgress, int currentPosition, int duration)?
+        progress,
+    TResult Function(int playbackState)? playbackState,
+    TResult Function(Object? error)? onPlayError,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel() when progress != null:
+        return progress(_that.progress, _that.secProgress,
+            _that.currentPosition, _that.duration);
+      case StateListenerModel() when playbackState != null:
+        return playbackState(_that.playbackState);
+      case OnPlayErrorListenerModel() when onPlayError != null:
+        return onPlayError(_that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            int progress, int secProgress, int currentPosition, int duration)
+        progress,
+    required TResult Function(int playbackState) playbackState,
+    required TResult Function(Object? error) onPlayError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel():
+        return progress(_that.progress, _that.secProgress,
+            _that.currentPosition, _that.duration);
+      case StateListenerModel():
+        return playbackState(_that.playbackState);
+      case OnPlayErrorListenerModel():
+        return onPlayError(_that.error);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            int progress, int secProgress, int currentPosition, int duration)?
+        progress,
+    TResult? Function(int playbackState)? playbackState,
+    TResult? Function(Object? error)? onPlayError,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case ProgressListenerModel() when progress != null:
+        return progress(_that.progress, _that.secProgress,
+            _that.currentPosition, _that.duration);
+      case StateListenerModel() when playbackState != null:
+        return playbackState(_that.playbackState);
+      case OnPlayErrorListenerModel() when onPlayError != null:
+        return onPlayError(_that.error);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

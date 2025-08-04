@@ -1,4 +1,3 @@
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player_rtmp_ext/models/android_play_manager.dart';
 import 'package:video_player_rtmp_ext/models/play_source.dart';
@@ -17,7 +16,7 @@ void main() {
 
 ///直播测试页面
 class LiveBroascasePage extends StatefulWidget {
-  const LiveBroascasePage({Key? key}) : super(key: key);
+  const LiveBroascasePage({super.key});
 
   @override
   State<LiveBroascasePage> createState() => _LiveBroascasePageState();
@@ -49,8 +48,6 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
           Positioned(top: padding.top,left: 0,right: 0,child: Row(
             children: [
               IconButton(onPressed: (){
-                openFile().then((value) {
-                });
               }, icon: const Icon(Icons.file_copy))
             ],
           ),),
