@@ -1,3 +1,11 @@
+## 0.2.2
+
+* Fix Android platform view dispose error (ViewRootImpl cannot be cast to ViewGroup)
+* Add better resource management for GSYVideoPlayer
+* Fix ProGuard rules to prevent class not found error in release builds
+* Add comprehensive proguard rules for GSYVideoPlayer, IJKPlayer and Flutter classes
+* Fix network access issue in release builds by adding required permissions to AndroidManifest.xml
+
 ## 0.2.1
 
 * Add proguard-rules configuration

@@ -180,4 +180,8 @@ class IJKPlayerController {
   void removeListener(VideoListenCallback listener) {
     state._platformController.removeListener(listener);
   }
+
+  void dispose(){
+    state._platformController.dispose();
+  }
 }

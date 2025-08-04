@@ -151,7 +151,34 @@ class IJKPlayerView(
     ///视图销毁
     override fun dispose() {
         Log.e(TAG, "视图销毁")
-//        player.release()
+        try {
+            // 停止播放并释放播放器资源
+            player.onVideoReset()
+            player.release()
+        } catch (e: Exception) {
+            Log.e(TAG, "释放播放器资源时出错: ${e.message}")
+        }
+        
+        try {
+            // 移除事件监听器
+            eventChannel.setStreamHandler(null)
+        } catch (e: Exception) {
+            Log.e(TAG, "移除事件监听器时出错: ${e.message}")
+        }
+        
+        try {
+            // 清理方法通道
+            methodChannel.setMethodCallHandler(null)
+        } catch (e: Exception) {
+            Log.e(TAG, "清理方法通道时出错: ${e.message}")
+        }
+        
+        try {
+            // 清理事件接收器
+            sink = null
+        } catch (e: Exception) {
+            Log.e(TAG, "清理事件接收器时出错: ${e.message}")
+        }
     }
 
 
@@ -269,7 +296,9 @@ class IJKPlayerView(
 
     override fun onPlayError(url: String?, vararg objects: Any?) {
         logger("onPlayError")
-        sink?.success(mapOf("dataType" to "onPlayError","error" to objects))
+        sink?.success(mapOf("dataType" to "onPlayError","error" to mapOf<String,Any>(
+            "title" to (objects[0]?.toString() ?: "")
+        )))
     }
 
     override fun onClickStartThumb(url: String?, vararg objects: Any?) {

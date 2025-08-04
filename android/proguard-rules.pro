@@ -1,44 +1,47 @@
--keep class com.shuyu.gsyvideoplayer.video.** { *; }
--dontwarn com.shuyu.gsyvideoplayer.video.**
--keep class com.shuyu.gsyvideoplayer.video.base.** { *; }
--dontwarn com.shuyu.gsyvideoplayer.video.base.**
--keep class com.shuyu.gsyvideoplayer.utils.** { *; }
--dontwarn com.shuyu.gsyvideoplayer.utils.**
--keep class com.shuyu.gsyvideoplayer.player.** {*;}
--dontwarn com.shuyu.gsyvideoplayer.player.**
+# Add project specific ProGuard rules here.
+# You can control the set of applied configuration files using the
+# proguardFiles setting in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
+
+# GSYVideoPlayer
+-keep class com.shuyu.gsyvideoplayer.** { *; }
+-dontwarn com.shuyu.gsyvideoplayer.**
+
+# IJKPlayer
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
--keep class androidx.media3.** {*;}
--keep interface androidx.media3.**
 
--keep class com.shuyu.alipay.** {*;}
--keep interface com.shuyu.alipay.**
+# Flutter
+-keep class io.flutter.** { *; }
+-dontwarn io.flutter.**
 
--keep public class * extends android.view.View{
-    *** get*();
-    void set*(***);
-    public <init>(android.content.Context);
-    public <init>(android.content.Context, java.lang.Boolean);
-    public <init>(android.content.Context, android.util.AttributeSet);
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-}
-
--keep class com.alivc.**{*;}
--keep class com.aliyun.**{*;}
--keep class com.cicada.**{*;}
--dontwarn com.alivc.**
--dontwarn com.aliyun.**
--dontwarn com.cicada.**
-
-# Keep Flutter plugin classes
+# 保持插件主类不被混淆
 -keep class shop.itbug.video_player_rtmp_ext.VideoPlayerRtmpExtPlugin { *; }
+
+# 保持自定义视图类
+-keep class shop.itbug.video_player_rtmp_ext.view.** { *; }
+
+# 保持ViewFactory类
 -keep class shop.itbug.video_player_rtmp_ext.ViewFactory { *; }
 
-# Keep all Flutter plugin classes in the package
+# 保持所有平台视图相关类
 -keep class shop.itbug.video_player_rtmp_ext.** { *; }
-
-# Suppress warnings for missing classes
--dontwarn shop.itbug.video_player_rtmp_ext.VideoPlayerRtmpExtPlugin
-
-# Suppress warnings for StringConcatFactory used by Kotlin
--dontwarn java.lang.invoke.StringConcatFactory

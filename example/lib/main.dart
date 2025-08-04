@@ -9,10 +9,30 @@ const line2 = 'rtmp://ns8.indexforce.com/home/mystream';
 const line3 = 'rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp';
 
 void main() {
-  runApp(const MaterialApp(
-    home: LiveBroascasePage(),
+  runApp( MaterialApp(
+    home: _DemoHome(),
   ));
 }
+class _DemoHome extends StatelessWidget {
+  const _DemoHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("demo"),),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextButton(onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>LiveBroascasePage()));
+            }, child: Text("line 1"))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 ///直播测试页面
 class LiveBroascasePage extends StatefulWidget {
@@ -102,6 +122,7 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
   @override
   void dispose() {
     controller.removeListener(onStateChange);
+    controller.dispose();
     super.dispose();
   }
 }

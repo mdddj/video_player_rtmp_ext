@@ -42,7 +42,7 @@ android {
     }
 
     defaultConfig {
-        compileSdkVersion 35
+        compileSdkVersion 36
         multiDexEnabled true
         applicationId "shop.itbug.video_player_rtmp_ext_example"
         namespace "shop.itbug.video_player_rtmp_ext_example"
