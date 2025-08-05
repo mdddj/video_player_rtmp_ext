@@ -1,3 +1,7 @@
+## 0.2.3
+
+fix ![#3](https://github.com/mdddj/video_player_rtmp_ext/issues/3)
+
 ## 0.2.2
 
 * Fix Android platform view dispose error (ViewRootImpl cannot be cast to ViewGroup)

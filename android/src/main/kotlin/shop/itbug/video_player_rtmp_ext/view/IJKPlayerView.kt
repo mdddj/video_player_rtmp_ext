@@ -58,7 +58,7 @@ class IJKPlayerView(
     }
 
     override fun getView(): View? {
-        return player.rootView
+        return player
     }
 
 
