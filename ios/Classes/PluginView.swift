@@ -1,14 +1,7 @@
-//
-//  PluginView.swift
-//  video_player_rtmp_ext
-//
-//  Created by ldd on 2022/9/17.
-//
 import SwiftUI
 import Foundation
 import AVFoundation
 import IJKMediaFramework
-
 
 ///视图组件
 class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlOpenDelegate{
@@ -16,7 +9,6 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     func willOpenUrl(_ urlOpenData: IJKMediaUrlOpenData!) {
         print("url 回调: \(urlOpenData.error)")
     }
-    
     
     /// --- 插件相关实例初始化
     var flutterPluginRegistrar: FlutterPluginRegistrar
@@ -26,11 +18,13 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     var eventChannel: FlutterEventChannel
     var sink: FlutterEventSink!
     
-    
     ///播放器实例
     var playerView: UIView!
     var controller: IJKFFMoviePlayerController!
     
+    // 添加标志位防止重复释放
+    private var isDisposed = false
+    private let disposeQueue = DispatchQueue(label: "com.plugin.dispose", qos: .utility)
     
     /// 构造初始化
     init(flutterPluginRegistrar: FlutterPluginRegistrar,viewId: Int64,fram: CGRect) {
@@ -44,18 +38,12 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         self.playerView = UIView(frame: fram)
         self.flutterMethedChannel.setMethodCallHandler(handle)
         self.eventChannel.setStreamHandler(self)
-        
     }
-    
     
     /// 视图返回
     func view() -> UIView {
         return playerView!
     }
-    
-    
-    
-    
     
     ///注册方法监听
     func handle(_ call: FlutterMethodCall,result: @escaping FlutterResult){
@@ -71,28 +59,28 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
             playByPaht(args: call.arguments!,result: result)
             break
         case "controller-play":
-            controller.play()
+            if controller != nil && !isDisposed {
+                controller.play()
+            }
             result(true)
             break;
         case "controller-dispose":
-            if(controller.isPlaying()){
-                controller.stop()
-                print("log: Playing, stop playing...")
-            }
-            controller.shutdown()
-            print("start free memory")
-            result(true)
+            disposeController(result: result)
             break
         case "controller-pause":
-            controller.pause()
+            if controller != nil && !isDisposed {
+                controller.pause()
+            }
             result(true)
             break
         case "controller-get-state":
-            let isPlaying =  controller.isPlaying()
+            let isPlaying = controller != nil && !isDisposed ? controller.isPlaying() : false
             result(isPlaying)
             break
         case "controller-stop":
-            controller.stop()
+            if controller != nil && !isDisposed {
+                controller.stop()
+            }
             result(true)
             break
         default:
@@ -100,7 +88,47 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         }
     }
     
-    
+    ///安全释放控制器
+    func disposeController(result: @escaping FlutterResult) {
+        disposeQueue.async { [weak self] in
+            guard let self = self, !self.isDisposed else {
+                DispatchQueue.main.async {
+                    result(true)
+                }
+                return
+            }
+            
+            self.isDisposed = true
+            
+            DispatchQueue.main.async {
+                // 先移除所有通知监听
+                self.destoryChangeStateObserver()
+                
+                if let controller = self.controller {
+                    // 如果正在播放，先停止
+                    if controller.isPlaying() {
+                        controller.stop()
+                        print("log: Playing, stop playing...")
+                        
+                        // 给一点时间让stop完成
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            controller.shutdown()
+                            print("start free memory")
+                            self.controller = nil
+                            result(true)
+                        }
+                    } else {
+                        controller.shutdown()
+                        print("start free memory")
+                        self.controller = nil
+                        result(true)
+                    }
+                } else {
+                    result(true)
+                }
+            }
+        }
+    }
     
     ///初始化ijkplayer视图 播放网络URL
     func initController(args: Any,result: @escaping FlutterResult) {
@@ -114,7 +142,6 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         result(true)
     }
     
-    
     ///播放本机文件
     func playByPaht(args: Any,result: @escaping FlutterResult) {
         let params = args as! NSMutableDictionary
@@ -126,9 +153,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
              }
              initView()
         }
-      
     }
-    
     
     func initView() {
         let view = controller.view
@@ -148,7 +173,6 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
         controller.segmentOpenDelegate = self
     }
    
-    
     ///初始化(必要的),
     func prerequisitInit(_ result: @escaping FlutterResult) {
         let session = AVAudioSession.sharedInstance()
@@ -165,9 +189,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
                 try session.setMode(.default)
             }
             try session.setActive(true)
-    
             result(true)
-            
         }catch{
             result(false)
         }
@@ -175,7 +197,7 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
 
     ///监听播放器状态
     func initChangeStateObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object:  self.controller)
+        NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange(notif:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object: self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange2(notif:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange1(notif:)), name: NSNotification.Name.IJKMPMoviePlayerFindStreamInfo, object: self.controller)
         NotificationCenter.default.addObserver(self, selector: #selector(PluginView.didChange3(notif:)), name: NSNotification.Name.IJKMPMediaPlaybackIsPreparedToPlayDidChange, object: self.controller)
@@ -183,27 +205,28 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     
     ///加载变化回调
     @objc func didChange(notif: Notification) {
+        guard !isDisposed else { return }
         let state = controller.loadState
         pushData(type: "loadState", data: state.rawValue)
     }
     @objc func didChange1(notif: Notification){
+        guard !isDisposed else { return }
         let state = controller.duration
         pushData(type: "duration", data: state)
     }
     @objc func didChange2(notif: Notification){
+        guard !isDisposed else { return }
         let state = controller.playbackState
         pushData(type: "playbackState", data: state.rawValue)
     }
     @objc func didChange3(notif: Notification){
-        let p =  controller.isPreparedToPlay
+        guard !isDisposed else { return }
+        let p = controller.isPreparedToPlay
         pushData(type: "isPreparedToPlay", data: p)
     }
     
     ///销毁全部的监听
     func destoryChangeStateObserver() {
-        if(controller.isPlaying()){
-            controller.shutdown()
-        }
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -215,10 +238,10 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         print("swift view on cancel")
-        destoryChangeStateObserver()
-        if(controller.isPlaying()){
-            controller.shutdown();
-            print("释放内存")
+        
+        // 使用统一的释放方法
+        disposeController { _ in
+            print("onCancel dispose completed")
         }
         
         return nil
@@ -226,12 +249,24 @@ class PluginView: NSObject,FlutterPlatformView,FlutterStreamHandler,IJKMediaUrlO
     
     ///传输数据到flutter端,flutter端使用一个map来接收和解析数据
     func pushData(type: String,data: Any) {
+        guard !isDisposed else { return }
         let map = [type: data]
         if(sink != nil){
             self.sink(map)
         }else{
             print("⚠️ ....sink is nil,send data fail")
         }
-        
+    }
+    
+    // 析构函数确保资源释放
+    deinit {
+        print("PluginView deinit")
+        if !isDisposed {
+            destoryChangeStateObserver()
+            if let controller = controller, controller.isPlaying() {
+                controller.stop()
+                controller.shutdown()
+            }
+        }
     }
 }

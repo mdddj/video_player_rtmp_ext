@@ -1,3 +1,7 @@
+## 0.2.4
+
+bug fix
+
 ## 0.2.3+1
 
 update doc
