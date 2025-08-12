@@ -1,0 +1,1 @@
+/Users/hlx/github/video_player_rtmp_ext/example/build/app/intermediates/cxx/Debug/386i513u/obj/armeabi-v7a

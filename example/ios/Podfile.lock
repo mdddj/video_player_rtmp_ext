@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - MCIJKPlayer (0.1.2)
+  - video_player_rtmp_ext (0.0.1):
+    - Flutter
+    - MCIJKPlayer
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - video_player_rtmp_ext (from `.symlinks/plugins/video_player_rtmp_ext/ios`)
+
+SPEC REPOS:
+  trunk:
+    - MCIJKPlayer
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  video_player_rtmp_ext:
+    :path: ".symlinks/plugins/video_player_rtmp_ext/ios"
+
+SPEC CHECKSUMS:
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  MCIJKPlayer: 997623ce426c1216462ba77ea6cb9f1660ad2a35
+  video_player_rtmp_ext: 462b493f703e08e86fd10be562a2e7d66b4ee8e1
+
+PODFILE CHECKSUM: 8d9ccfdc998e47641c4460409e4c921edc09f1c0
+
+COCOAPODS: 1.16.2
