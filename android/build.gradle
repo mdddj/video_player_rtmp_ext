@@ -6,7 +6,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
         maven { url "https://maven.aliyun.com/repository/public" }
     }
 }
@@ -49,5 +48,5 @@ android {
 
 
 dependencies {
-    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyvideoplayer:latest.release'
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyvideoplayer:11.1.0'
 }

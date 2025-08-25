@@ -1,3 +1,15 @@
+## 0.2.6+1
+
+doc update
+
+## 0.2.6
+
+deps update
+
+## 0.2.5
+
+remove jitpack repository
+
 ## 0.2.4
 
 bug fix
