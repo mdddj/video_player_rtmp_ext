@@ -1,3 +1,7 @@
+## 0.2.7
+
+Dependency Upgrade
+
 ## 0.2.6+1
 
 doc update
