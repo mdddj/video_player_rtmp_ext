@@ -51,6 +51,9 @@ pod install
 
 ## 1.Simple example
 
+![macos.png](images/macos.png)
+
+
 * Initialize controller
 
 ```dart
