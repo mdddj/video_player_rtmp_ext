@@ -1,3 +1,9 @@
+## 0.3.0
+
+MacOS support
+
+![macos.png](images/macos.png)
+
 ## 0.2.7
 
 Dependency Upgrade
