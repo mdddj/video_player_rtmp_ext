@@ -68,7 +68,11 @@ class _LiveBroascasePageState extends State<LiveBroascasePage> {
           Positioned(top: padding.top,left: 0,right: 0,child: Row(
             children: [
               IconButton(onPressed: (){
-              }, icon: const Icon(Icons.file_copy))
+              }, icon: const Icon(Icons.file_copy)),
+              IconButton(onPressed: () async {
+                final status = await controller.isPlaying;
+                print(status);
+              }, icon: const Icon(Icons.safety_check))
             ],
           ),),
           Positioned(

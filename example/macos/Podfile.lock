@@ -1,28 +1,29 @@
 PODS:
-  - file_selector_macos (0.0.1):
-    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - video_player_rtmp_ext (0.0.1):
     - FlutterMacOS
+    - VLCKit
+  - VLCKit (3.6.0)
 
 DEPENDENCIES:
-  - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - video_player_rtmp_ext (from `Flutter/ephemeral/.symlinks/plugins/video_player_rtmp_ext/macos`)
 
+SPEC REPOS:
+  trunk:
+    - VLCKit
+
 EXTERNAL SOURCES:
-  file_selector_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   video_player_rtmp_ext:
     :path: Flutter/ephemeral/.symlinks/plugins/video_player_rtmp_ext/macos
 
 SPEC CHECKSUMS:
-  file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  video_player_rtmp_ext: e30c8d0923fdd8d304c34b1a86d4202c5ea21f14
+  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
+  video_player_rtmp_ext: 600338d54cd0bf330e452ac203181dff3d7ac1ed
+  VLCKit: 0249cc10be7094917f2230468957dbd36f378291
 
-PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
+PODFILE CHECKSUM: 977acbc4738919b03b54ed35921ba75fef54b2a0
 
 COCOAPODS: 1.16.2

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../models/android_play_manager.dart';
 import '../models/play_source.dart';
@@ -8,6 +9,7 @@ import '../video_player_rtmp_ext.dart';
 
 const _UIKITVIEW_ID = 'video-player-rtmp-widget-ios';
 const _ANDROIDVIEW_ID = 'video-player-rtmp-widget-android';
+const _UIKITVIEW_ID_WITH_MACOS = 'video-player-rtmp-widget-macos';
 
 typedef ViewCreated = void Function(IJKPlayerController controller);
 
@@ -78,6 +80,8 @@ class VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
       return _buildAndroidWidget;
     } else if (Platform.isIOS) {
       return _buildIosWidget;
+    } else if (Platform.isMacOS) {
+      return _buildMacosWidget;
     }
     return const Text('This platform is not supported');
   }
@@ -86,6 +90,13 @@ class VideoPlayerRtmpExtWidgetState extends State<VideoPlayerRtmpExtWidget> {
   Widget get _buildIosWidget {
     return UiKitView(
         viewType: _UIKITVIEW_ID, onPlatformViewCreated: _platformSetup);
+  }
+
+  Widget get _buildMacosWidget {
+    return AppKitView(
+        viewType: _UIKITVIEW_ID_WITH_MACOS,
+        onPlatformViewCreated: _platformSetup,
+        creationParamsCodec: StandardMessageCodec());
   }
 
   ///安卓端视图
@@ -181,7 +192,7 @@ class IJKPlayerController {
     state._platformController.removeListener(listener);
   }
 
-  void dispose(){
+  void dispose() {
     state._platformController.dispose();
   }
 }
