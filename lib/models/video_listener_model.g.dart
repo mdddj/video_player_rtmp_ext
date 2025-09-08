@@ -9,10 +9,10 @@ part of 'video_listener_model.dart';
 ProgressListenerModel _$ProgressListenerModelFromJson(
         Map<String, dynamic> json) =>
     ProgressListenerModel(
-      progress: (json['progress'] as num).toInt(),
-      secProgress: (json['secProgress'] as num).toInt(),
-      currentPosition: (json['currentPosition'] as num).toInt(),
-      duration: (json['duration'] as num).toInt(),
+      progress: json['progress'] as num,
+      secProgress: json['secProgress'] as num,
+      currentPosition: json['currentPosition'] as num,
+      duration: json['duration'] as num,
       $type: json['dataType'] as String?,
     );
 

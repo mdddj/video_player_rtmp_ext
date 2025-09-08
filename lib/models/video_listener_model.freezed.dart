@@ -163,7 +163,7 @@ extension VideoListenerModelPatterns on VideoListenerModel {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            int progress, int secProgress, int currentPosition, int duration)?
+            num progress, num secProgress, num currentPosition, num duration)?
         progress,
     TResult Function(int playbackState)? playbackState,
     TResult Function(Object? error)? onPlayError,
@@ -199,7 +199,7 @@ extension VideoListenerModelPatterns on VideoListenerModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            int progress, int secProgress, int currentPosition, int duration)
+            num progress, num secProgress, num currentPosition, num duration)
         progress,
     required TResult Function(int playbackState) playbackState,
     required TResult Function(Object? error) onPlayError,
@@ -231,7 +231,7 @@ extension VideoListenerModelPatterns on VideoListenerModel {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            int progress, int secProgress, int currentPosition, int duration)?
+            num progress, num secProgress, num currentPosition, num duration)?
         progress,
     TResult? Function(int playbackState)? playbackState,
     TResult? Function(Object? error)? onPlayError,
@@ -265,10 +265,10 @@ class ProgressListenerModel extends VideoListenerModel {
   factory ProgressListenerModel.fromJson(Map<String, dynamic> json) =>
       _$ProgressListenerModelFromJson(json);
 
-  final int progress;
-  final int secProgress;
-  final int currentPosition;
-  final int duration;
+  final num progress;
+  final num secProgress;
+  final num currentPosition;
+  final num duration;
 
   @JsonKey(name: 'dataType')
   final String $type;
@@ -321,7 +321,7 @@ abstract mixin class $ProgressListenerModelCopyWith<$Res>
           $Res Function(ProgressListenerModel) _then) =
       _$ProgressListenerModelCopyWithImpl;
   @useResult
-  $Res call({int progress, int secProgress, int currentPosition, int duration});
+  $Res call({num progress, num secProgress, num currentPosition, num duration});
 }
 
 /// @nodoc
@@ -345,19 +345,19 @@ class _$ProgressListenerModelCopyWithImpl<$Res>
       progress: null == progress
           ? _self.progress
           : progress // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       secProgress: null == secProgress
           ? _self.secProgress
           : secProgress // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       currentPosition: null == currentPosition
           ? _self.currentPosition
           : currentPosition // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       duration: null == duration
           ? _self.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
     ));
   }
 }

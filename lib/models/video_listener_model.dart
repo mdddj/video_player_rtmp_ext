@@ -10,10 +10,10 @@ sealed class VideoListenerModel with _$VideoListenerModel {
 
   @FreezedUnionValue("ProgressListener")
   const factory VideoListenerModel.progress(
-      {required int progress,
-      required int secProgress,
-      required int currentPosition,
-      required int duration}) = ProgressListenerModel;
+      {required num progress,
+      required num secProgress,
+      required num currentPosition,
+      required num duration}) = ProgressListenerModel;
 
   @FreezedUnionValue('sendCallbackEvent')
   const factory VideoListenerModel.playbackState({required int playbackState}) =
