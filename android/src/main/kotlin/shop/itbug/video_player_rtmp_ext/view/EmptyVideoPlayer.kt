@@ -1,7 +1,6 @@
 package shop.itbug.video_player_rtmp_ext.view
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.MotionEvent
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import shop.itbug.video_player_rtmp_ext.R

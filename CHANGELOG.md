@@ -1,3 +1,7 @@
+## 0.4.0
+
+Support 16KB page size
+
 ## 0.3.1
 
 bug fix

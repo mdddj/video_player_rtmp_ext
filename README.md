@@ -52,6 +52,7 @@ pod install
 ## 1.Simple example
 
 ![macos.png](images/macos.png)
+![android](images/android.png)
 
 
 * Initialize controller

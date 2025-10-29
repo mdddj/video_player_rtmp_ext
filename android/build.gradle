@@ -6,7 +6,24 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            allowInsecureProtocol = true
+        }
     }
 }
 
@@ -48,5 +65,9 @@ android {
 
 
 dependencies {
-    implementation "io.github.carguo:gsyvideoplayer:11.1.0"
+    implementation("io.github.carguo:gsyvideoplayer:11.1.0") {
+        exclude group: "io.antmedia", module: "rtmp-client"
+    }
+    implementation("com.github.mcxinyu:LibRtmp-Client-for-Android:v3.2.0.m2")
+
 }
